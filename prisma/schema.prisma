@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider               = "prisma-client"
+  output                 = "../generated"
+  importFileExtension    = "ts"
+  generatedFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MESSAGE_TYPE {
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  FILE
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  surname    String?
+  password   String
+  phone      String   @unique
+  avatar_url String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+
+  @@map("users")
+}
+
+model Message {
+  id          String       @id @default(uuid())
+  type        MESSAGE_TYPE @default(TEXT)
+  body        String?
+  sender_id   String
+  receiver_id String
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+
+  sender   User @relation("SentMessages", fields: [sender_id], references: [id])
+  receiver User @relation("ReceivedMessages", fields: [receiver_id], references: [id])
+
+  @@map("messages")
+}
+
+model Contacts {
+  id         String @id @default(uuid())
+  user_id    String
+  contact_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("contacts")
+}
