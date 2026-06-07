@@ -9,9 +9,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
+import { YandexModule } from './yandex/yandex.module';
 
 @Module({
-    imports: [ConfigModule.forRoot({ isGlobal: true }), UserModule],
+    imports: [ConfigModule.forRoot({ isGlobal: true }), UserModule, YandexModule],
     controllers: [AppController],
     providers: [AppService, PrismaService],
 })
