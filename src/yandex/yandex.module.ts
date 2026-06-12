@@ -3,7 +3,7 @@ import { YandexService } from './yandex.service';
 import { YandexController } from './yandex.controller';
 
 @Module({
-  controllers: [YandexController],
-  providers: [YandexService],
+    controllers: [YandexController],
+    providers: [YandexService],
 })
 export class YandexModule {}

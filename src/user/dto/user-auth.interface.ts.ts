@@ -1,9 +1,4 @@
-import {
-    IsNotEmpty,
-    IsPhoneNumber,
-    IsString,
-    MinLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString, Length, MinLength } from 'class-validator';
 
 export class UserAuthDto {
     @IsNotEmpty()
@@ -12,7 +7,8 @@ export class UserAuthDto {
     password: string;
 
     @IsNotEmpty()
-    @IsPhoneNumber('RU')
+    @IsString()
+    @Length(8)
     phone: string;
 
     constructor(password: string, phone: string) {
