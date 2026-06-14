@@ -1,4 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Post,
+} from '@nestjs/common';
 import { UserAuthDto } from './dto/user-auth.interface.ts';
 import { UserRegisterDto } from './dto/user-register.interface';
 import { UserService } from './user.service';
@@ -11,6 +18,12 @@ export class UserController {
     @HttpCode(HttpStatus.CREATED)
     async register(@Body() dto: UserRegisterDto) {
         return await this.userService.register(dto);
+    }
+
+    @Get('/all')
+    @HttpCode(HttpStatus.OK)
+    async findMany() {
+        return await this.userService.findMany();
     }
 
     @Post('/auth')

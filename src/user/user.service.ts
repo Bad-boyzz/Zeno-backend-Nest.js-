@@ -47,4 +47,12 @@ export class UserService {
             throw new UnauthorizedException(UserStatusEnum.UNAUTHORIZED);
         return user;
     }
+
+    async findMany() {
+        try {
+            return await this.prismaService.user.findMany();
+        } catch (error) {
+            throw new BadRequestException(error); // исправить error
+        }
+    }
 }

@@ -19,7 +19,7 @@ export class MessageGateway
     private readonly logger = new Logger(MessageGateway.name);
 
     @WebSocketServer()
-    server: Server;
+    server: Server | undefined;
 
     async handleConnection(client: Socket) {
         this.logger.log(`Client trying to connect... ID: ${client.id}`);
@@ -33,5 +33,7 @@ export class MessageGateway
         this.logger.log(client.id, data);
     }
 
-    handleDisconnect(client: any) {}
+    async handleDisconnect(client: Socket) {
+        this.logger.log(`Client disconnected... ID: ${client.id}`);
+    }
 }
