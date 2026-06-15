@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from '../libs/shared/src';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MessageModule } from './message/message.module';
+import { ContactsModule } from './contacts/contacts.module';
 import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
 import { YandexModule } from './yandex/yandex.module';
@@ -17,7 +17,8 @@ import { YandexModule } from './yandex/yandex.module';
         ConfigModule.forRoot({ isGlobal: true }),
         UserModule,
         YandexModule,
-        MessageModule,
+        // MessageModule,
+        ContactsModule,
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],

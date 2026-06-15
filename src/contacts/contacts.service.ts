@@ -12,7 +12,7 @@ import type { ContactDeleteDto } from './dto/contacts-delete.interface';
 export class ContactsService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    async create(dto: ContactCreateDto) {
+    async create(userId: string, dto: ContactCreateDto) {
         try {
             const user = await this.prismaService.user.findFirst({
                 where: {
@@ -23,7 +23,7 @@ export class ContactsService {
                 throw new NotFoundException(UserStatusEnum.USER_NOT_FOUND);
             return await this.prismaService.contacts.create({
                 data: {
-                    user_id: dto.userId,
+                    user_id: userId,
                     contact_id: user.id,
                 },
             });
@@ -60,11 +60,11 @@ export class ContactsService {
         }
     }
 
-    async delete(dto: ContactDeleteDto) {
+    async delete(userId: string, dto: ContactDeleteDto) {
         try {
             const contact = await this.prismaService.contacts.findFirst({
                 where: {
-                    user_id: dto.userId,
+                    user_id: userId,
                     contact_id: dto.contactId,
                 },
             });

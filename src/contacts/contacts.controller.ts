@@ -7,9 +7,12 @@ import type { ContactDeleteDto } from './dto/contacts-delete.interface';
 export class ContactsController {
     constructor(private readonly contactsService: ContactsService) {}
 
-    @Post()
-    async create(@Body() dto: ContactCreateDto) {
-        return await this.contactsService.create(dto);
+    @Post(':userId')
+    async create(
+        @Param('userId') userId: string,
+        @Body() dto: ContactCreateDto,
+    ) {
+        return await this.contactsService.create(userId, dto);
     }
 
     @Get(':userId')
@@ -17,8 +20,11 @@ export class ContactsController {
         return await this.contactsService.findMany(userId);
     }
 
-    @Delete()
-    async delete(@Body() dto: ContactDeleteDto) {
-        return await this.contactsService.delete(dto);
+    @Delete(':userId')
+    async delete(
+        @Param('userId') userId: string,
+        @Body() dto: ContactDeleteDto,
+    ) {
+        return await this.contactsService.delete(userId, dto);
     }
 }
