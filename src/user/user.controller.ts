@@ -4,6 +4,7 @@ import {
     Get,
     HttpCode,
     HttpStatus,
+    Param,
     Post,
 } from '@nestjs/common';
 import { UserAuthDto } from './dto/user-auth.interface.ts';
@@ -18,6 +19,11 @@ export class UserController {
     @HttpCode(HttpStatus.CREATED)
     async register(@Body() dto: UserRegisterDto) {
         return await this.userService.register(dto);
+    }
+
+    @Get('/:id')
+    async findById(@Param('id') id: string) {
+        return await this.userService.findById(id);
     }
 
     @Get('/all')
