@@ -5,6 +5,7 @@ import {
     NotFoundException,
     UnauthorizedException,
 } from '@nestjs/common';
+import type { User } from '../../generated/browser';
 import { UserStatusEnum } from '../../libs/shared/src';
 import { PrismaService } from '../prisma.service';
 import type { UserAuthDto } from './dto/user-auth.interface.ts';
@@ -13,6 +14,34 @@ import type { UserRegisterDto } from './dto/user-register.interface';
 @Injectable()
 export class UserService {
     constructor(private readonly prismaService: PrismaService) {}
+
+    async findById(id: string): Promise<User | null> {
+        try {
+            const user = await this.prismaService.user.findUnique({
+                where: {
+                    id,
+                },
+            });
+            if (!user) return null;
+            return user;
+        } catch (error) {
+            throw new BadRequestException(error);
+        }
+    }
+
+    async findByPhone(phone: string): Promise<User | null> {
+        try {
+            const user = await this.prismaService.user.findUnique({
+                where: {
+                    phone,
+                },
+            });
+            if (!user) return null;
+            return user;
+        } catch (error) {
+            throw new BadRequestException(error);
+        }
+    }
 
     async register(dto: UserRegisterDto) {
         const user = await this.prismaService.user.findUnique({

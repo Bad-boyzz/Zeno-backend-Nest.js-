@@ -21,15 +21,15 @@ export class UserController {
         return await this.userService.register(dto);
     }
 
-    @Get('/:id')
-    async findById(@Param('id') id: string) {
-        return await this.userService.findById(id);
-    }
-
     @Get('/all')
     @HttpCode(HttpStatus.OK)
     async findMany() {
         return await this.userService.findMany();
+    }
+
+    @Get('/:id')
+    async findById(@Param('id') id: string) {
+        return await this.userService.findById(id);
     }
 
     @Post('/auth')
